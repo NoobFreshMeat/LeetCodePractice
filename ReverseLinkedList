@@ -6,9 +6,12 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+ 
+ /* iterative*/
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
+        if (!head || !head->next) return head;
         ListNode* pre = NULL;
         while (head)
         {
@@ -18,5 +21,18 @@ public:
             head = next;
         }
         return pre;
+    }
+};
+
+
+/*recursive*/
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head->next) return head;
+        ListNode* temp = reverseList(head->next);
+        head->next->next = head;
+        head->next = NULL;
+        return temp;
     }
 };
