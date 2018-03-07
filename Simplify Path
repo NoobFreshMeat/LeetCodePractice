@@ -1,0 +1,22 @@
+// use stringstream with string::getline() (c++11 version)
+class Solution {
+public:
+    string simplifyPath(string path) {
+        string temp = "";
+        string res = "";
+        stringstream ss(path);
+        vector<string> vecstr;
+        while (getline(ss, temp, '/'))
+        {
+            if (temp == "" || temp == ".") continue;
+            if (temp == ".." && !vecstr.empty()) vecstr.pop_back();
+            else if (temp != "..") vecstr.push_back(temp);
+        }
+        for (auto s : vecstr)
+        {
+            res += "/";
+            res += s;
+        }
+        return res.empty() ? "/" : res;
+    }
+};
