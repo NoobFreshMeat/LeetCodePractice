@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool isValid(string s) {
+        std::stack<char> temp;
+        for (char& a : s)
+        {
+            switch (a)
+            {
+                case '(':
+                case '{':
+                case '[': temp.push(a); break;
+                case ']': 
+                    if (temp.empty() || temp.top() != '[') return false;
+                    else temp.pop();
+                    break;
+                case '}':
+                    if (temp.empty() || temp.top() != '{') return false;
+                    else temp.pop();
+                    break;
+                case ')':
+                    if (temp.empty() || temp.top() != '(') return false;
+                    else temp.pop();
+                    break;
+                default: ;
+            }
+        }
+        return temp.empty();
+    }
+};
