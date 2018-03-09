@@ -1,3 +1,4 @@
+// use stack
 class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
@@ -35,5 +36,36 @@ public:
             }
         }
         return res.top();
+    }
+};
+
+//use lameda expression
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        std::unordered_map<string, std::function<int(int, int)> > map = 
+        {
+            {"+", [ ] (int a, int b) { return a + b; } },
+            {"-", [ ] (int a, int b) { return a - b; } },
+            {"*", [ ] (int a, int b) { return a * b; } },
+            {"/", [ ] (int a, int b) { return a / b; } }
+        };
+        std::stack<int> stk;
+        for (auto &s : tokens)
+        {   
+            if (!map.count(s)) 
+            {
+                stk.push(std::stoi(s));
+            }
+            else
+            {
+                int operand2 = stk.top();
+                stk.pop();
+                int operand1 = stk.top();
+                stk.pop();
+                stk.push(map[s](operand1, operand2));
+            }
+        }
+        return stk.top();
     }
 };
