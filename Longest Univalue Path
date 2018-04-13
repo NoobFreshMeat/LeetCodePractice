@@ -1,0 +1,28 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int longestUnivaluePath(TreeNode* root) {
+        if (!root) return 0;
+        int maxLength = 0;
+        getLongestPath(root, maxLength);        
+        return maxLength;
+    }
+    
+    int getLongestPath(TreeNode* root, int& res)  //take care, need use reference
+    {
+        int l = root->left ? getLongestPath(root->left, res) : 0;
+        int r = root->right ? getLongestPath(root->right, res) : 0;
+        l = (root->left && (root->left->val == root->val)) ? ++l : 0;
+        r = (root->right && (root->right->val == root->val)) ? ++r : 0;
+        res = max(res, l + r);
+        return max(l, r);
+    }
+};
